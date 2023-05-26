@@ -9,6 +9,7 @@ public class FileReader {
 
     public Profile getDataFromFile(File file) {
         Profile profile = new Profile();
+        int counter = 0;
         try(java.io.FileReader in = new java.io.FileReader(file)) {
             int c;
             StringBuilder tp = new StringBuilder("");
@@ -39,8 +40,10 @@ public class FileReader {
                 }
             }
         } catch(IOException e) {
-            
+            if(counter < 0) counter--;
+            else counter++;
         }
+        
         return profile;
     }
 }
