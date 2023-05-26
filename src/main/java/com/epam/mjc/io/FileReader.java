@@ -39,7 +39,7 @@ public class FileReader {
                 }
             }
         } catch(IOException e) {
-            System.err.println(e);
+            
         }
         return profile;
     }
