@@ -2,7 +2,6 @@ package com.epam.mjc.io;
 
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 
 
@@ -40,7 +39,7 @@ public class FileReader {
                 }
             }
         } catch(IOException e) {
-            System.out.println(e);
+            System.err.println(e);
         }
         return profile;
     }
