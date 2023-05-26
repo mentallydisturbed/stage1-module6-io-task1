@@ -3,13 +3,13 @@ package com.epam.mjc.io;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 
 public class FileReader {
 
     public Profile getDataFromFile(File file) {
         Profile profile = new Profile();
-        int counter = 0;
         try(java.io.FileReader in = new java.io.FileReader(file)) {
             int c;
             StringBuilder tp = new StringBuilder("");
@@ -20,11 +20,15 @@ public class FileReader {
                     if(tp.toString().contains("Name:")){
                         profile.setName(val.substring(0, val.length() - 1));
                     }else if(tp.toString().contains("Age:")) {
-                        profile.setAge(Integer.parseInt(val.substring(0, val.length() - 1)));
+                        if(Character.isDigit(val.charAt(val.length() - 1)))
+                            profile.setAge(Integer.parseInt(val.toString()));
+                        else profile.setAge(Integer.parseInt(val.substring(0, val.length() - 1)));
                     }else if(tp.toString().contains("Email:")) {
                         profile.setEmail(val.substring(0, val.length() - 1));
                     }else if(tp.toString().contains("Phone:")) {
-                        profile.setPhone(Long.parseLong(val.substring(0, val.length() - 1)));
+                        if(Character.isDigit(val.charAt(val.length() - 1)))
+                            profile.setPhone(Long.parseLong(val.toString()));
+                        else profile.setPhone(Long.parseLong(val.substring(0, val.length() - 1)));
                     }
                     tp = new StringBuilder("");
                     val = new StringBuilder("");
@@ -40,10 +44,10 @@ public class FileReader {
                 }
             }
         } catch(IOException e) {
-            if(counter < 0) counter--;
-            else counter++;
+            // add logger
+            // remove serr
         }
-        
+
         return profile;
     }
 }
