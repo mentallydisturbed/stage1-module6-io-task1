@@ -9,35 +9,34 @@ import java.io.IOException;
 public class FileReader {
 
     public Profile getDataFromFile(File file) {
-        FileWriter fileWriter = null;
         Profile profile = new Profile();
         try(java.io.FileReader in = new java.io.FileReader(file)) {
             int c;
-            String tp = "";
-            String val = "";
+            StringBuilder tp = new StringBuilder("");
+            StringBuilder val = new StringBuilder("");
             boolean has = false;
             while((c = in.read()) != -1){
                 if((char)(c) == '\n') {
-                    if(tp.contains("Name:")){
+                    if(tp.toString().contains("Name:")){
                         profile.setName(val.substring(0, val.length() - 1));
-                    }else if(tp.contains("Age:")) {
+                    }else if(tp.toString().contains("Age:")) {
                         profile.setAge(Integer.parseInt(val.substring(0, val.length() - 1)));
-                    }else if(tp.contains("Email:")) {
+                    }else if(tp.toString().contains("Email:")) {
                         profile.setEmail(val.substring(0, val.length() - 1));
-                    }else if(tp.contains("Phone:")) {
+                    }else if(tp.toString().contains("Phone:")) {
                         profile.setPhone(Long.parseLong(val.substring(0, val.length() - 1)));
                     }
-                    tp = "";
-                    val = "";
+                    tp = new StringBuilder("");
+                    val = new StringBuilder("");
                     has = false;
                     continue;
                 }else if((char)c == ' '){
                     has = true;
                 }
                 if(has && (char)c != ' '){
-                    val += (char)c;
+                    val.append((char)c);
                 }else if(!has){
-                    tp += (char)c;
+                    tp.append((char)c);
                 }
             }
         } catch(IOException e) {
